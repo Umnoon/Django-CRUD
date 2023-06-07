@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+  <head>
+    <title>Stock Data</title>
+    {% comment %} <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-locale-en-latest.min.js"></script> {% endcomment %}
+    <style>
+      table {
+        border-collapse: collapse;
+        width: 100%;
+      }
+
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Stock Data</h1>
+    {% comment %} <div>
+      <label for="trade_code">Select Trade Code:</label>
+      <select id="trade_code" onchange="updateChart(this.value)">
+          <option value="">All</option>
+          {% for stock in stocks %}
+              <option value="{{ stock.trade_code }}">{{ stock.trade_code }}</option>
+          {% endfor %}
+      </select>
+  </div> {% endcomment %}
+  {% comment %} <div id="line_chart"></div>
+  <div id="bar_chart"></div> {% endcomment %}
+  
+  {{chart|safe}}
+  
+  <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Trade Code</th>
+          <th>High</th>
+          <th>Low</th>
+          <th>Open</th>
+          <th>Close</th>
+          <th>Volume</th>
+          <th>Actions</th>
+          
+        </tr>
+      </thead>
+      <tbody>
+      <a href="{% url 'create_stock' %}">Add New Stock</a>
+        {% for stock in stocks %}
+        <tr>
+          <td>{{ stock.date }}</td>
+          <td>{{ stock.trade_code }}</td>
+          <td>{{ stock.high }}</td>
+          <td>{{ stock.low }}</td>
+          <td>{{ stock.open }}</td>
+          <td>{{ stock.close }}</td>
+          <td>{{ stock.volume }}</td>
+    
+          <td>
+            <a href="{% url 'update_stock' stock.pk %}">Edit</a>
+            <a href="{% url 'delete_stock' stock.pk %}">Delete</a>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+    {% comment %} <script>
+      function updateChart(tradeCode) {
+          var lineChartPath = "{% static 'line_chart.png' %}";
+          var barChartPath = "{% static 'bar_chart.png' %}";
+
+          if (tradeCode) {
+              lineChartPath = lineChartPath + "?trade_code=" + tradeCode;
+              barChartPath = barChartPath + "?trade_code=" + tradeCode;
+          }
+
+          document.getElementById("line_chart").innerHTML = "<img src='" + lineChartPath + "'>";
+          document.getElementById("bar_chart").innerHTML = "<img src='" + barChartPath + "'>";
+      }
+  </script> {% endcomment %}
+  </body>
+</html>

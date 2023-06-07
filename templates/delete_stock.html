@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Delete Stock</title>
+  </head>
+  <body>
+    <h1>Delete Stock</h1>
+    <p>
+      Are you sure you want to delete the stock with trade code "{{
+      stock.trade_code }}"?
+    </p>
+    <form method="post">
+      {% csrf_token %}
+      <button type="submit">Delete</button>
+    </form>
+  </body>
+</html>
